@@ -16,8 +16,10 @@ fn main() {
 
                 let parts = string_buf.split("\n");
 
-                for _part in parts {
-                    _stream.write_all(b"+PONG\r\n").unwrap();
+                for part in parts {
+                    if part.eq("PING") {
+                        _stream.write_all(b"+PONG\r\n").unwrap();
+                    }
                 }
             }
             Err(e) => {
