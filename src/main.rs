@@ -9,17 +9,17 @@ fn main() {
     for stream in listener.incoming() {
         match stream {
             Ok(mut _stream) => {
-                let mut buf = vec![0;1024];
-                let _ = _stream.read(&mut buf);
-                let string_buf = String::from_utf8(buf).unwrap();
-                println!("{}", string_buf);
+                loop {
+                    let mut buf = vec![0;1024];
+                    let _ = _stream.read(&mut buf);
+                    let string_buf = String::from_utf8(buf).unwrap();
 
-                let parts = string_buf.split("\n");
+                    let parts = string_buf.split("\r\n");
 
-                for part in parts {
-                    println!("{}", part);
-                    if part.eq("PING") {
-                        _stream.write_all(b"+PONG\r\n").unwrap();
+                    for part in parts {
+                        if part == "PING" {
+                            _stream.write_all(b"+PONG\r\n").unwrap();
+                        }
                     }
                 }
             }
