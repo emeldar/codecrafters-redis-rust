@@ -17,6 +17,7 @@ fn main() {
                 let parts = string_buf.split("\n");
 
                 for part in parts {
+                    println!("{}", part);
                     if part.eq("PING") {
                         _stream.write_all(b"+PONG\r\n").unwrap();
                     }
